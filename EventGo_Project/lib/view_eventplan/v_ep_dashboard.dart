@@ -1,8 +1,8 @@
 import 'package:EventGo_Project/view_eventplan/v_ep_createevent.dart';
 import 'package:flutter/material.dart';
 
-class ep_dashboard extends StatelessWidget {
-  const ep_dashboard({Key key}) : super(key: key);
+class Ep_dashboard extends StatelessWidget {
+  const Ep_dashboard({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +25,40 @@ class Style_dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Event Planner Dashboard"),
+          title: Text("Event Planner Dashboard",
+              style: TextStyle(fontFamily: 'frenchcanon')),
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(
             Icons.add,
           ),
-          onPressed: () { Navigator.push(
+          onPressed: () {
+            Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ep_createevent()),
-            );},
+              MaterialPageRoute(builder: (context) => Ep_createevent()),
+            );
+          },
+        ),
+        body: Stack(
+          children: [
+            Align(
+              alignment: Alignment(0.0, 0.0),
+              child: Icon(Icons.calendar_today),
+            ),
+            Align(
+              alignment: Alignment(0.0, 0.1),
+              child: Textsstyles("Add Your Event Today", 30.0),
+            )
+          ],
         ));
   }
+}
+
+//===================================== Custom Widget =========================================
+
+Widget Textsstyles(String placers, double sizers) {
+  return Text(
+    placers,
+    style: TextStyle(fontFamily: 'frenchcanon', fontSize: sizers),
+  );
 }

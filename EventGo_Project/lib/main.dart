@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'view_eventplan/v_ep_dashboard.dart';
+import 'view_participator/v_par_dashboard.dart';
+import 'package:EventGo_Project/view_administration/v_register.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,36 +25,70 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: testbutton(),
+      home: Testbutton(),
     );
   }
 }
 
-class testbutton extends StatefulWidget {
-  testbutton({Key key}) : super(key: key);
+class Testbutton extends StatefulWidget {
+  Testbutton({Key key}) : super(key: key);
 
   @override
-  _testbuttonState createState() => _testbuttonState();
+  _TestbuttonState createState() => _TestbuttonState();
 }
 
-class _testbuttonState extends State<testbutton> {
+class _TestbuttonState extends State<Testbutton> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: 80.0,
-        color: Colors.black,
-        child: FlatButton(
-          color: Colors.amberAccent,
-          child: Text("Next"),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ep_dashboard()),
-            );
-          },
-        ),
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 80.0,
+            color: Colors.black,
+            child: FlatButton(
+              color: Colors.amberAccent,
+              child: Text("Event Planner"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Ep_dashboard()),
+                );
+              },
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            height: 80.0,
+            color: Colors.black,
+            child: FlatButton(
+              color: Colors.amberAccent,
+              child: Text("Event Participator"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Style_pardashboard()),
+                );
+              },
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            height: 80.0,
+            color: Colors.black,
+            child: FlatButton(
+              color: Colors.amberAccent,
+              child: Text("Register"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Style_register()),
+                );
+              },
+            ),
+          )
+        ],
       ),
     );
   }
