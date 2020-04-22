@@ -1,5 +1,6 @@
 import 'package:EventGo_Project/view_eventplan/v_ep_createevent.dart';
 import 'package:flutter/material.dart';
+import 'package:EventGo_Project/dashboard_conector.dart';
 
 class Ep_dashboard extends StatelessWidget {
   const Ep_dashboard({Key key}) : super(key: key);
@@ -11,31 +12,34 @@ class Ep_dashboard extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
-      home: Style_dashboard(),
+      initialRoute: '/',
+      routes: {
+        '/': (BuildContext context) => Style_epdashboard(),
+        '/createevent': (BuildContext context) => Style_createevent()
+      },
     );
   }
 }
 
-//================================= Style Activity ========================================
+//===================================== Style ep dashboard =================================
 
-class Style_dashboard extends StatelessWidget {
-  const Style_dashboard({Key key}) : super(key: key);
+class Style_epdashboard extends StatelessWidget {
+  const Style_epdashboard({Key key}) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Event Planner Dashboard",
-              style: TextStyle(fontFamily: 'frenchcanon')),
-        ),
+   
         floatingActionButton: FloatingActionButton(
           child: Icon(
             Icons.add,
           ),
           onPressed: () {
-            Navigator.push(
+            Navigator.pushNamed(
               context,
-              MaterialPageRoute(builder: (context) => Ep_createevent()),
+              '/createevent'
             );
           },
         ),

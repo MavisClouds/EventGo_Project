@@ -1,7 +1,11 @@
+import 'package:EventGo_Project/dashboard_conector.dart';
+import 'package:EventGo_Project/view_eventplan/v_ep_createevent.dart';
 import 'package:flutter/material.dart';
 import 'view_eventplan/v_ep_dashboard.dart';
 import 'view_participator/v_par_dashboard.dart';
 import 'package:EventGo_Project/view_administration/v_register.dart';
+import 'package:EventGo_Project/view_administration/start_page.dart';
+import 'package:EventGo_Project/view_administration/start_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,14 +27,19 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.amber,
       ),
-      home: Testbutton(),
+     initialRoute: '/',routes: {
+        '/': (BuildContext context) => Dashboard_c(login: false,),
+        '/participatord': (BuildContext context) => Data_pardashboard(),
+        '/register': (BuildContext context)=> Register(),
+        '/eventplannerd': (BuildContext context) => Ep_dashboard(),
+      },
     );
   }
 }
 
-class Testbutton extends StatefulWidget {
+/*class Testbutton extends StatefulWidget {
   Testbutton({Key key}) : super(key: key);
 
   @override
@@ -51,9 +60,8 @@ class _TestbuttonState extends State<Testbutton> {
               color: Colors.amberAccent,
               child: Text("Event Planner"),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Ep_dashboard()),
+                Navigator.pushNamed(context, '/eventplannerd'
+                  
                 );
               },
             ),
@@ -66,9 +74,9 @@ class _TestbuttonState extends State<Testbutton> {
               color: Colors.amberAccent,
               child: Text("Event Participator"),
               onPressed: () {
-                Navigator.push(
+                Navigator.pushNamed(
                   context,
-                  MaterialPageRoute(builder: (context) => Style_pardashboard()),
+                  '/participatord'
                 );
               },
             ),
@@ -81,9 +89,23 @@ class _TestbuttonState extends State<Testbutton> {
               color: Colors.amberAccent,
               child: Text("Register"),
               onPressed: () {
-                Navigator.push(
+                Navigator.pushNamed(
                   context,
-                  MaterialPageRoute(builder: (context) => Style_register()),
+                  '/register'
+                );
+              },
+            ),
+          ),Container(
+            width: double.infinity,
+            height: 80.0,
+            color: Colors.black,
+            child: FlatButton(
+              color: Colors.amberAccent,
+              child: Text("Register"),
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/login'
                 );
               },
             ),
@@ -93,3 +115,4 @@ class _TestbuttonState extends State<Testbutton> {
     );
   }
 }
+*/

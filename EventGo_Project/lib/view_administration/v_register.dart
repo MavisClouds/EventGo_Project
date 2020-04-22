@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_webservice/directions.dart';
-import 'package:sqflite/sqflite.dart';
-import 'dart:async';
+import 'package:EventGo_Project/CustomWidget/customw.dart';
+import 'package:http/http.dart' as http;
 
 class Register extends StatelessWidget {
   const Register({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Style_register();
+    return MaterialApp(
+      home: Style_register(),
+    );
   }
 }
 
-//======================================== Style Register ================================
+//======================================== Register Data ================================
 TextEditingController emailcontroller = TextEditingController();
 TextEditingController usernamecontroller = TextEditingController();
 TextEditingController passwordcontroller = TextEditingController();
 TextEditingController confirmpasswordcontroller = TextEditingController();
 
 class Style_register extends StatefulWidget {
-
-
   @override
   _Style_registerState createState() => _Style_registerState();
 }
@@ -28,74 +27,50 @@ class Style_register extends StatefulWidget {
 class _Style_registerState extends State<Style_register> {
   final _formKey = GlobalKey<FormState>();
 
+  void Adddata() {
+    var url = "https://eventgo.pmh.web.id/adddata.php";
+    http.post(url, body: {
+      "email": emailcontroller.text,
+      "username": usernamecontroller.text,
+      "password": passwordcontroller.text
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-          body: Container(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(30, 30, 30, 0),
-                child: TextFormField(
-                  controller: emailcontroller,
-                  decoration: InputDecoration(
-                      hintText: "Email", border: OutlineInputBorder()),
-                  onChanged: (value) {
-                
-                  },
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(30, 30, 30, 0),
-                child: TextFormField(
-                  controller: usernamecontroller,
-                  decoration: InputDecoration(
-                      hintText: "Username", border: OutlineInputBorder()),
-                  onChanged: (value) {
-                   
-                  },
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(30, 30, 30, 0),
-                child: TextFormField(
-                  controller: passwordcontroller,
-                  decoration: InputDecoration(
-                      hintText: "Password", border: OutlineInputBorder()),
-                  onChanged: (value) {
-               
-                  },
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(30, 30, 30, 0),
-                child: TextFormField(
-                  controller: confirmpasswordcontroller,
-                  decoration: InputDecoration(
-                      hintText: "Confirm Password",
-                      border: OutlineInputBorder()),
-                  onChanged: (value) {},
-                ),
-              ),
-              RaisedButton(
-                  child: Text("Submit"),
-                  onPressed: () {
-                    setState(() {
-                  
-                    });
-                  }),
-            ],
-          ),
+    return Scaffold(
+        body: Container(
+            child: ListView(
+      children: [
+        Column(
+          children: [
+            formtext("Email", emailcontroller, false),
+            formtext("Username", usernamecontroller, false),
+            formtext("Password", passwordcontroller, true),
+            formtext("Confirm Password", null, true),
+            Container(
+              height: 10,
+            ),
+            FlatButton(
+              child: Text("SignUp",
+                  style: TextStyle(
+                      fontFamily: 'frenchcanon',
+                      fontSize: 30,
+                      color: Colors.black)),
+              color: Colors.grey[200],
+              onPressed: () {
+                Adddata();
+              },
+            )
+          ],
         ),
-      )),
-    );
+      ],
+    )));
   }
 
-
+  void show() {
+    print(emailcontroller.text);
+  }
 
   void showalertdialog(String title, String messages) {
     AlertDialog alertDialog = AlertDialog(
@@ -108,14 +83,16 @@ class _Style_registerState extends State<Style_register> {
 
 //=========================================== Custom Widget ==========================================
 
-/*Widget formtext(String hints) {
+Widget formtext(
+    String hints, TextEditingController inputcontroller, bool hidden) {
   return Container(
-    margin: EdgeInsets.fromLTRB(30, 30, 30, 0),
-    child: TextFormField(
+    margin: EdgeInsets.fromLTRB(30, 15, 30, 0),
+    child: TextField(
+      controller: inputcontroller,
       decoration:
           InputDecoration(hintText: hints, border: OutlineInputBorder()),
       onChanged: (value) {},
+      obscureText: hidden,
     ),
   );
 }
-*/
