@@ -34,6 +34,7 @@ class _Style_registerState extends State<Style_register> {
       "username": usernamecontroller.text,
       "password": passwordcontroller.text
     });
+    showalertdialog("Succesfully", "Registered");
   }
 
   @override

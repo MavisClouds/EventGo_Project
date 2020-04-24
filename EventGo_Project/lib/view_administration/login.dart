@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:EventGo_Project/CustomWidget/customw.dart';
 import 'package:http/http.dart' as http;
 import 'package:EventGo_Project/dashboard_conector.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -35,11 +36,20 @@ class _Login_dataState extends State<Login_data> {
 
     if (datauser.length == 0) {
     } else {
+      loginUser();
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return Dashboard_c(login: true,);
       }));
     }
   }
+
+   bool isLoggedIn = false;
+
+  Future<Null> loginUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isloggedin', true);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,4 +77,12 @@ class _Login_dataState extends State<Login_data> {
       ],
     );
   }
+  void showalertdialog(String title, String messages) {
+    AlertDialog alertDialog = AlertDialog(
+      title: Text(title),
+      content: Text(messages),
+    );
+    showDialog(context: context, builder: (_) => alertDialog);
+  }
 }
+
