@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'v_ep_dashboard.dart';
 import 'package:EventGo_Project/CustomWidget/customw.dart';
+import 'package:http/http.dart' as http;
 
 class Ep_createevent extends StatelessWidget {
   const Ep_createevent({Key key}) : super(key: key);
@@ -14,7 +16,9 @@ class Ep_createevent extends StatelessWidget {
 //============================================== Create Event Data =============================
 
 class Style_createevent extends StatefulWidget {
-  Style_createevent({Key key}) : super(key: key);
+  Style_createevent({
+    Key key,
+  }) : super(key: key);
 
   @override
   _Style_createeventState createState() => _Style_createeventState();
@@ -32,19 +36,38 @@ class _Style_createeventState extends State<Style_createevent> {
   TextEditingController enddatecontroller = TextEditingController();
   TextEditingController locationcontroller = TextEditingController();
 
+  _Style_createeventState();
+
+  Future<void> Adddata() async {
+    var url = "http://192.168.1.65/mydata/adddataevent.php";
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String idaccount = prefs.getString('idaccount');
+    print(idaccount);
+    http.post(url, body: {
+      "nama_event": titlecontroller.text,
+      "deskripsi_event": desccontroller.text,
+      "tanggal_mulai": startdatecontroller.text,
+      "tanggal_selesai": enddatecontroller.text,
+      "lokasi": locationcontroller.text,
+      "idacc": idaccount
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            backgroundColor: Colors.amber,
             leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        )),
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.arrow_right),
           onPressed: () {
+            Adddata();
             Navigator.pop(context);
           },
         ),
@@ -59,14 +82,6 @@ class _Style_createeventState extends State<Style_createevent> {
           ]),
         ));
   }
-
-  void back() {
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-      return Ep_dashboard();
-    }));
-  }
 }
 
 //======================================== Custom Widget =======================================
-
-

@@ -26,26 +26,38 @@ Widget Cflatbutton(String text) {
   );
 }
 
- 
-
 Widget Textstyles(String text, double fontsizes, Color color) {
-  return Text(text,
-      style: TextStyle(
-          fontFamily: 'frenchcanon', fontSize: fontsizes, color: color));
+  return Text(
+    text,
+    style:
+        TextStyle(fontFamily: 'frenchcanon', fontSize: fontsizes, color: color),
+    textAlign: TextAlign.start,
+  );
 }
 
 Widget datetime(String hints, TextEditingController inputs) {
   return Container(
       margin: EdgeInsets.fromLTRB(30, 30, 30, 0),
-      child: DateTimeField(controller: inputs,
+      child: DateTimeField(
+        controller: inputs,
         decoration: InputDecoration(hintText: hints),
-        format: DateFormat("yyyy-MM-dd"),
-        onShowPicker: (context, currentValue) {
-          return showDatePicker(
+        format: DateFormat("yyyy-MM-dd HH:mm"),
+        onShowPicker: (context, currentValue) async {
+          final date = await showDatePicker(
               context: context,
               firstDate: DateTime(2020),
               initialDate: currentValue ?? DateTime.now(),
               lastDate: DateTime(2100));
+          if (date != null) {
+            final time = await showTimePicker(
+              context: context,
+              initialTime:
+                  TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+            );
+            return DateTimeField.combine(date, time);
+          } else {
+            return currentValue;
+          }
         },
       ));
 }

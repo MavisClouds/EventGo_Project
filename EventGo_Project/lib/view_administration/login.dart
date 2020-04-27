@@ -34,6 +34,10 @@ class _Login_dataState extends State<Login_data> {
 
     var datauser = json.decode(response.body);
 
+    String idacc = datauser[0]["idacc"];
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('idaccount', idacc);
+    print(idacc);
     if (datauser.length == 0) {
     } else {
       loginUser();

@@ -1,4 +1,5 @@
 import 'package:EventGo_Project/view_administration/start_page.dart';
+import 'package:EventGo_Project/view_eventplan/v_ep_createevent.dart';
 import 'package:flutter/material.dart';
 import 'package:EventGo_Project/CustomWidget/customw.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,6 +53,20 @@ class _Dashboard_cState extends State<Dashboard_c> {
         },
         child: loggedin
             ? Scaffold(
+                floatingActionButton: participator
+                    ? null
+                    : FloatingActionButton(
+                        backgroundColor: Colors.amber,
+                        child: Icon(
+                          Icons.add,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Ep_createevent()));
+                        },
+                      ),
                 appBar: AppBar(
                   actions: [
                     IconButton(
@@ -71,23 +86,34 @@ class _Dashboard_cState extends State<Dashboard_c> {
                 drawer: Drawer(
                   child: ListView(
                     children: [
-                      ListTile(
-                        title: Textstyles("Participator", 25, Colors.black),
-                        onTap: () {
-                          setState(() {
-                            participator = true;
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                      ListTile(
-                        title: Textstyles("Event Planner", 25, Colors.black),
-                        onTap: () {
-                          setState(() {
-                            participator = false;
-                          });
-                          Navigator.pop(context);
-                        },
+                      DrawerHeader(
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title:
+                                  Textstyles("Participator", 25, Colors.black),
+                              onTap: () {
+                                setState(() {
+                                  participator = true;
+                                });
+                                Navigator.pop(context);
+                              },
+                            ),
+                            ListTile(
+                              title:
+                                  Textstyles("Event Planner", 25, Colors.black),
+                              onTap: () {
+                                setState(() {
+                                  participator = false;
+                                });
+                                Navigator.pop(context);
+                              },
+                            )
+                          ],
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.amber,
+                        ),
                       )
                     ],
                   ),
