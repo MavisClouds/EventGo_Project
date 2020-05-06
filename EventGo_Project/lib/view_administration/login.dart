@@ -34,39 +34,43 @@ class _Login_dataState extends State<Login_data> {
 
     var datauser = json.decode(response.body);
 
-    String idacc = datauser[0]["idacc"];
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('idaccount', idacc);
-    print(idacc);
     if (datauser.length == 0) {
+      showalertdialog("You Shall Not Pass", "Username/Password incorrect");
     } else {
+      String idacc = datauser[0]["idacc"];
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('idaccount', idacc);
       loginUser();
       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return Dashboard_c(login: true,);
+        return Dashboard_c(
+          login: true,
+        );
       }));
     }
   }
 
-   bool isLoggedIn = false;
+  bool isLoggedIn = false;
 
   Future<Null> loginUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isloggedin', true);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        formtext("Username", usernamecontroller, false),
-        formtext("Password", passwordcontroller, true),
+        formtext("Username", usernamecontroller, false, "Username"),
+        formtext("Password", passwordcontroller, true, "Password"),
         Container(
           margin: EdgeInsets.only(top: 25),
         ),
-        SizedBox(
+        Container(
           width: double.infinity,
+          decoration:
+              BoxDecoration(border: Border.all(width: 2, color: Colors.black26)),
           child: FlatButton(
+            padding: EdgeInsets.only(top: 5, bottom: 5),
             child: Text("Sign In",
                 style: TextStyle(
                     fontFamily: 'frenchcanon',
@@ -81,6 +85,7 @@ class _Login_dataState extends State<Login_data> {
       ],
     );
   }
+
   void showalertdialog(String title, String messages) {
     AlertDialog alertDialog = AlertDialog(
       title: Text(title),
@@ -89,4 +94,3 @@ class _Login_dataState extends State<Login_data> {
     showDialog(context: context, builder: (_) => alertDialog);
   }
 }
-

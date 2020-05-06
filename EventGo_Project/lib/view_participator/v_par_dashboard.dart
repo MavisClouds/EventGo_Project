@@ -12,25 +12,30 @@ class Par_dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Card(
+        elevation: 0,
         child: Container(
             child: ListView.builder(
           padding: const EdgeInsets.all(8),
           itemCount: list == null ? 0 : list.length,
           itemBuilder: (context, i) {
             return new Card(
-              child: ListTile(
-                leading: Icon(Icons.event),
-                title: Text(list[i]["nama_event"]),
-                subtitle: Text(list[i]["deskripsi_event"]),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Detail_par(
-                                list: list,
-                                index: i,
-                              )));
-                },
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(width: 2, color: Colors.amber)),
+                child: ListTile(
+                  leading: Icon(Icons.event),
+                  title: Text(list[i]["nama_event"]),
+                  subtitle: Text(list[i]["deskripsi_event"]),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Detail_par(
+                                  list: list,
+                                  index: i,
+                                )));
+                  },
+                ),
               ),
             );
           },
@@ -51,7 +56,7 @@ class Data_pardashboard extends StatefulWidget {
 
 class _Data_dashboardState extends State<Data_pardashboard> {
   Future<List> getdata() async {
-    final respones = await http.get("http://192.168.1.65/mydata/getdata.php");
+    final respones = await http.get("https://eventgo.pmh.web.id/getdata.php");
     // print(respones.toString());
     return json.decode(respones.body);
   }

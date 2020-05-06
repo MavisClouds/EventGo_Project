@@ -36,10 +36,12 @@ class _Style_createeventState extends State<Style_createevent> {
   TextEditingController enddatecontroller = TextEditingController();
   TextEditingController locationcontroller = TextEditingController();
 
+  String dropdownValue = 'Category';
+
   _Style_createeventState();
 
   Future<void> Adddata() async {
-    var url = "http://192.168.1.65/mydata/adddataevent.php";
+    var url = "https://eventgo.pmh.web.id/adddataevent.php";
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String idaccount = prefs.getString('idaccount');
     print(idaccount);
@@ -49,7 +51,8 @@ class _Style_createeventState extends State<Style_createevent> {
       "tanggal_mulai": startdatecontroller.text,
       "tanggal_selesai": enddatecontroller.text,
       "lokasi": locationcontroller.text,
-      "idacc": idaccount
+      "idacc": idaccount,
+      "kategori": dropdownValue
     });
   }
 
@@ -73,13 +76,43 @@ class _Style_createeventState extends State<Style_createevent> {
         ),
         body: Form(
           key: _formKey,
-          child: Column(children: <Widget>[
-            formtext("Event Title", titlecontroller, false),
-            formtext("Describe Your Event", desccontroller, false),
-            datetime("Start Date", startdatecontroller),
-            datetime("End Date", enddatecontroller),
-            formtext("Location", locationcontroller, false)
-          ]),
+          child: Column(
+              children: <Widget>[
+                formtext("Event Title", titlecontroller, false,"Title"),
+                formtext("Describe Your Event", desccontroller, false,"Description"),
+                datetime("Start Date", startdatecontroller),
+                datetime("End Date", enddatecontroller),
+                Container(margin: EdgeInsets.all(10),
+                  child: DropdownButton<String>(
+                    value: dropdownValue,
+                    icon: Icon(Icons.location_city),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.black,
+                    ),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        dropdownValue = newValue;
+                      });
+                    },
+                    items: <String>[
+                      'Category',
+                      'Computer',
+                      'Academic',
+                      'Culture',
+                      'Sport'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                          value: value,
+                          child: Textstyles(value, 30, Colors.black));
+                    }).toList(),
+                  ),
+                ),
+                formtext("Location", locationcontroller, false,"Location")
+              ]),
         ));
   }
 }

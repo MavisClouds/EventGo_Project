@@ -53,6 +53,14 @@ class Detail_par extends StatelessWidget {
                       25,
                       Colors.black),
                 ),
+              ),Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Textstyles(
+                      "Location: ${list[index]["lokasi"]}",
+                      25,
+                      Colors.black),
+                ),
               ),
               Container(
                 width: double.infinity,

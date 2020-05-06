@@ -3,13 +3,13 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 
 Widget formtext(
-    String hints, TextEditingController inputcontroller, bool hidden) {
+    String hints, TextEditingController inputcontroller, bool hidden, String label) {
   return Container(
-    margin: EdgeInsets.fromLTRB(30, 15, 30, 0),
+    margin: EdgeInsets.fromLTRB(30, 15, 30, 15),
     child: TextField(
       controller: inputcontroller,
       decoration:
-          InputDecoration(hintText: hints, border: OutlineInputBorder()),
+          InputDecoration(hintText: hints, border: OutlineInputBorder(),labelText: label),
       onChanged: (value) {},
       obscureText: hidden,
     ),
@@ -61,3 +61,4 @@ Widget datetime(String hints, TextEditingController inputs) {
         },
       ));
 }
+

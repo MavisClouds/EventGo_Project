@@ -32,7 +32,7 @@ class Start_page extends StatelessWidget {
                     ),
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                      child: TabBar(
+                      child: TabBar(indicatorColor: Colors.amber,
                         tabs: [
                           Text("Sign In",
                               style: TextStyle(

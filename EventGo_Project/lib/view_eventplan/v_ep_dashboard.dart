@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:EventGo_Project/view_eventplan/v_ep_createevent.dart';
+import 'package:EventGo_Project/view_eventplan/v_ep_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,7 +33,7 @@ class Style_epdashboard extends StatelessWidget {
     final String idaccount = prefs.getString('idaccount');
     print(idaccount);
     final respones = await http.post(
-        "http://192.168.1.65/mydata/showeventplan.php",
+        "https://eventgo.pmh.web.id/showeventplan.php",
         body: {'idacc': idaccount});
 
     // print(respones.toString());
@@ -42,17 +43,27 @@ class Style_epdashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.amber,
+          child: Icon(
+            Icons.add,
+          ),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Ep_createevent()));
+          },
+        ),
         body: new FutureBuilder(
-      future: getdata(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) print(snapshot.error);
-        return snapshot.hasData
-            ? new Style_eventplan(list: snapshot.data)
-            : new Center(
-                child: CircularProgressIndicator(),
-              );
-      },
-    ));
+          future: getdata(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) print(snapshot.error);
+            return snapshot.hasData
+                ? new Style_eventplan(list: snapshot.data)
+                : new Center(
+                    child: CircularProgressIndicator(),
+                  );
+          },
+        ));
   }
 }
 
@@ -72,10 +83,23 @@ class Style_eventplan extends StatelessWidget {
         itemCount: list == null ? 0 : list.length,
         itemBuilder: (context, i) {
           return new Card(
-            child: ListTile(
-              leading: Icon(Icons.event),
-              title: Text(list[i]["nama_event"]),
-              subtitle: Text(list[i]["deskripsi_event"]),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(width: 2, color: Colors.amber)),
+              child: ListTile(
+                leading: Icon(Icons.event),
+                title: Text(list[i]["nama_event"]),
+                subtitle: Text(list[i]["deskripsi_event"]),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Ep_detail(
+                                list: list,
+                                index: i,
+                              )));
+                },
+              ),
             ),
           );
         },
