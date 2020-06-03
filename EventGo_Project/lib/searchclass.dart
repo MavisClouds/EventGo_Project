@@ -14,9 +14,12 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   String dropdownValue = 'Category';
+  TextEditingController startdatecontroller = TextEditingController();
+  TextEditingController enddatecontroller = TextEditingController();
 
   Future<List> getdata() async {
     final respones = await http.post("https://eventgo.pmh.web.id/filters.php",
+    //final respones = await http.post("http://localhost/eventgo/filters.php",
         body: {'kategori': dropdownValue});
 
     // print(respones.toString());

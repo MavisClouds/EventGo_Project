@@ -29,6 +29,7 @@ class _Style_registerState extends State<Style_register> {
 
   void Adddata() {
     var url = "https://eventgo.pmh.web.id/adddata.php";
+    //var url = "http://localhost/eventgo/adddata.php";
     http.post(url, body: {
       "email": emailcontroller.text,
       "username": usernamecontroller.text,

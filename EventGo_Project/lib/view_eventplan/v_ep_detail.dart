@@ -66,6 +66,7 @@ class _Ep_detailState extends State<Ep_detail> {
 
   Future<void> deletedata() async {
     var url = "https://eventgo.pmh.web.id/deletedataevent.php";
+    //var url = "http://localhost/eventgo/deletedataevent.php";
     http.post(url, body: {
       "idevent": widget.list[widget.index]["idevent"],
     });
@@ -73,6 +74,7 @@ class _Ep_detailState extends State<Ep_detail> {
 
   Future<void> updatedata() async {
     var url = "https://eventgo.pmh.web.id/updatedata.php";
+    //var url = "http://localhost/eventgo/updatedata.php";
     http.post(url, body: {
       "idevent": widget.list[widget.index]["idevent"],
       "nama_event": titlecontroller.text,

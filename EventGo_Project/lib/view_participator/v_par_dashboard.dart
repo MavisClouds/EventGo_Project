@@ -57,6 +57,7 @@ class Data_pardashboard extends StatefulWidget {
 class _Data_dashboardState extends State<Data_pardashboard> {
   Future<List> getdata() async {
     final respones = await http.get("https://eventgo.pmh.web.id/getdata.php");
+    //final respones = await http.get("http://localhost/eventgo/getdata.php");
     // print(respones.toString());
     return json.decode(respones.body);
   }
