@@ -1,4 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'v_ep_dashboard.dart';
 import 'package:EventGo_Project/CustomWidget/customw.dart';
@@ -11,6 +14,7 @@ class Ep_createevent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Style_createevent();
   }
+
 }
 
 //============================================== Create Event Data =============================
@@ -29,6 +33,74 @@ final homeScaffoldKey = GlobalKey<ScaffoldState>();
 class _Style_createeventState extends State<Style_createevent> {
   final _formKey = GlobalKey<FormState>();
 
+  /*static final String uploadEndPoint = 'http://localhost/eventgo/upload_image.php';
+  Future<File> file;
+  String status = '';
+  String base64Image;
+  File tmpFile;
+  String errMessage = 'Error Uploading Image';
+
+  chooseImage() {
+    setState(() {
+      file = ImagePicker.pickImage(source: ImageSource.gallery);
+    });
+    setStatus('');
+  }
+
+  setStatus(String message)
+  {
+    setState(() {
+      status = message;
+    });
+  }
+  startUpload() {
+    if(null == tmpFile) {
+      return;
+    }
+    String fileName = tmpFile.path.split('/').last;
+    upload(fileName);
+  }
+
+  upload(String fileName){
+    http.post(uploadEndPoint, body: {
+      "image": base64Image,
+      "name": fileName,
+    }).then((result) {
+      setStatus(result.statusCode == 200 ? result.body : errMessage);
+    }).catchError((error) {
+      setStatus(error);
+    });
+  }
+
+  Widget showImage(){
+    return FutureBuilder<File>(
+      future: file,
+      builder: (BuildContext context, AsyncSnapshot<File> snapshot){
+        if(snapshot.connectionState == ConnectionState.done &&
+        null != snapshot.data) {
+          tmpFile = snapshot.data;
+          base64Image = base64Encode(snapshot.data.readAsBytesSync());
+          return Flexible(
+            child: Image.file(
+              snapshot.data,
+              fit: BoxFit.fill,
+              ),
+              );
+        } else if (null != snapshot.error) {
+          return const Text(
+            'Error picking image',
+            textAlign: TextAlign.center,
+          );
+        } else {
+          return const Text(
+            'No Image Selected',
+            textAlign: TextAlign.center,
+          );
+        }
+      }
+    );
+  }*/
+
   String initvalue;
   TextEditingController titlecontroller = TextEditingController();
   TextEditingController desccontroller = TextEditingController();
@@ -42,6 +114,7 @@ class _Style_createeventState extends State<Style_createevent> {
 
   Future<void> Adddata() async {
     var url = "https://eventgo.pmh.web.id/adddataevent.php";
+    //var url = "http://localhost/eventgo/adddataevent.php";
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String idaccount = prefs.getString('idaccount');
     print(idaccount);
@@ -111,7 +184,26 @@ class _Style_createeventState extends State<Style_createevent> {
                     }).toList(),
                   ),
                 ),
-                formtext("Location", locationcontroller, false,"Location")
+                formtext("Location", locationcontroller, false,"Location"),
+                /*OutlineButton(
+                  onPressed: chooseImage,
+                  child: Text('Choose Image'),
+                  ),
+                  SizedBox(height: 20.0,),
+                  showImage(),
+                  SizedBox(height: 20.0,),
+                  OutlineButton(
+                    onPressed: startUpload,
+                    child: Text('Upload Image'),
+                    ),
+                  SizedBox(height: 20.0,),
+                  Text(status,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20.0,
+                  ))*/
               ]),
         ));
   }
