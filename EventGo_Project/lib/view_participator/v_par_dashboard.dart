@@ -1,12 +1,42 @@
 import 'package:EventGo_Project/view_participator/v_detail_par.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:async';
 
 class Par_dashboard extends StatelessWidget {
   final List list;
-  Par_dashboard({this.list});
+  final int index;
+  String idevent;
+  
+  Par_dashboard({this.list, this.index});
+
+  Future<void> joindata() async {
+    var url = "https://eventgo.pmh.web.id/joinevent.php";
+    //var url = "http://localhost/eventgo/joinevent.php";
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String idaccount = prefs.getString('idaccount');
+    print(idaccount);
+    http.post(url, body: {
+      "idacc": idaccount,
+      "idevent": idevent,
+    });
+  }
+
+  Future<List> cekjoin() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String idaccount = prefs.getString('idaccount');
+    print(idaccount);
+    final respones = await http.post(
+        "https://eventgo.pmh.web.id/cekjoin.php",
+        //"http://localhost/eventgo/cekjoin.php",
+        body: {'idacc': idaccount,
+               'idevent': idevent});
+
+    // print(respones.toString());
+    return json.decode(respones.body);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +52,10 @@ class Par_dashboard extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     border: Border.all(width: 2, color: Colors.amber)),
-                child: ListTile(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
                   leading: Icon(Icons.event),
                   title: Text(list[i]["nama_event"]),
                   subtitle: Text(list[i]["deskripsi_event"]),
@@ -36,7 +69,21 @@ class Par_dashboard extends StatelessWidget {
                                 )));
                   },
                 ),
+                ButtonBar(
+                  children: <Widget>[
+                    
+                    FlatButton(
+                      child: const Text('Ikuti Event'),
+                      onPressed: () { 
+                        idevent = list[i]["idevent"];
+                        joindata(); },
+                    ),
+                  ],
+                ),
+                ],
               ),
+              )
+              
             );
           },
         )),

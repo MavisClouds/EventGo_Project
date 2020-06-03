@@ -77,7 +77,7 @@ class _Dashboard_cState extends State<Dashboard_c> {
                   ],
                   backgroundColor: Colors.transparent,
                   title: participator
-                      ? Textstyles("Participator", 25, Colors.black)
+                      ? Textstyles("Event List", 25, Colors.black)
                       : Textstyles("Event Planner", 25, Colors.black),
                 ),
                 drawer: Drawer(
@@ -92,7 +92,7 @@ class _Dashboard_cState extends State<Dashboard_c> {
                                       width: 2, color: Colors.amber)),
                               child: ListTile(
                                 title: Textstyles(
-                                    "Participator", 25, Colors.black),
+                                    "Event List", 25, Colors.black),
                                 onTap: () {
                                   setState(() {
                                     participator = true;
